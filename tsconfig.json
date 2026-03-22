@@ -1,0 +1,8 @@
+{
+  "extends": ".",
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "strict": true,
+    "declaration": true
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "@ecommerce/shared",
+  "version": "1.0.0",
+  "description": "Shared utilities, types, and middleware for microservices",
+  "main": "src/index.js",
+  "type": "module",
+  "dependencies": {
+    "joi": "^17.11.0",
+    "jsonwebtoken": "^9.1.2",
+    "winston": "^3.11.0",
+    "express": "^4.18.2",
+    "uuid": "^9.0.1"
+  }
+}

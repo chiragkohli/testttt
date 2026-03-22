@@ -1,0 +1,29 @@
+{
+  "name": "ecommerce-backend",
+  "version": "1.0.0",
+  "description": "Production-grade e-commerce microservices backend",
+  "private": true,
+  "workspaces": [
+    "shared",
+    "services/api-gateway",
+    "services/user-service",
+    "services/product-service",
+    "services/search-service"
+  ],
+  "scripts": {
+    "dev": "docker-compose up",
+    "dev:build": "docker-compose up --build",
+    "dev:down": "docker-compose down",
+    "logs": "docker-compose logs -f",
+    "logs:gateway": "docker-compose logs -f api-gateway",
+    "logs:users": "docker-compose logs -f user-service",
+    "logs:products": "docker-compose logs -f product-service",
+    "logs:search": "docker-compose logs -f search-service",
+    "test": "jest --passWithNoTests",
+    "test:coverage": "jest --coverage --passWithNoTests",
+    "test:watch": "jest --watch --passWithNoTests"
+  },
+  "keywords": ["ecommerce", "microservices", "javascript", "nodejs"],
+  "author": "",
+  "license": "MIT"
+}
