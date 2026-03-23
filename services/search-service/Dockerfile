@@ -11,7 +11,7 @@ COPY . .
 
 # Clear npm cache and install dependencies
 RUN npm cache clean --force && \
-    npm install --legacy-peer-deps --no-optional && \
+    npm install --legacy-peer-deps && \
     npm cache clean --force
 
 # Production stage

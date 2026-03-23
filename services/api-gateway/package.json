@@ -8,7 +8,6 @@
     "dev": "node src/server.js",
     "start": "node src/server.js",
     "test": "jest --detectOpenHandles --forceExit",
-    "test:unit": "jest --testPathPattern='\\.test\\.js$' --detectOpenHandles --forceExit",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage --forceExit"
   },
@@ -36,4 +35,4 @@
     "typescript": "^5.2.2",
     "supertest": "^6.3.3"
   }
-}}
+}
