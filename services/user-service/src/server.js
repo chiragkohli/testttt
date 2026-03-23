@@ -1,9 +1,19 @@
-import { AppDataSource } from './config/database.js';
 import { validateEnvironment, getEnv } from './config/environment.js';
-import { createLogger } from '@ecommerce/shared';
 import app from './app.js';
 
-const logger = createLogger('user-service');
+let logger;
+try {
+  const { createLogger } = await import('@ecommerce/shared');
+  logger = createLogger('user-service');
+} catch (e) {
+  console.log('Using fallback logger - shared module not fully initialized');
+  logger = {
+    info: (msg) => console.log(`[INFO] ${msg}`),
+    error: (msg, err) => console.error(`[ERROR] ${msg}`, err),
+    warn: (msg) => console.warn(`[WARN] ${msg}`),
+  };
+}
+
 const env = getEnv();
 
 // Validate environment variables
@@ -14,10 +24,16 @@ validateEnvironment();
  */
 const startServer = async () => {
   try {
-    // Initialize database
-    if (!AppDataSource.isInitialized) {
-      await AppDataSource.initialize();
-      logger.info('Database connected successfully');
+    // Initialize database (non-blocking for now)
+    try {
+      const { AppDataSource } = await import('./config/database.js');
+      if (!AppDataSource.isInitialized) {
+        await AppDataSource.initialize();
+        logger.info('Database connected successfully');
+      }
+    } catch (dbError) {
+      logger.warn('Database connection failed, service will continue without DB');
+      console.error('DB Error:', dbError.message);
     }
 
     // Start Express server
@@ -33,8 +49,13 @@ const startServer = async () => {
 // Handle graceful shutdown
 process.on('SIGTERM', async () => {
   logger.info('SIGTERM signal received: closing HTTP server');
-  if (AppDataSource.isInitialized) {
-    await AppDataSource.destroy();
+  try {
+    const { AppDataSource } = await import('./config/database.js');
+    if (AppDataSource.isInitialized) {
+      await AppDataSource.destroy();
+    }
+  } catch (e) {
+    console.log('Database cleanup skipped');
   }
   process.exit(0);
 });

@@ -1,8 +1,19 @@
 import { validateEnvironment, getEnv } from './config/environment.js';
-import { createLogger } from '@ecommerce/shared';
 import app from './app.js';
 
-const logger = createLogger('api-gateway');
+let logger;
+try {
+  const { createLogger } = await import('@ecommerce/shared');
+  logger = createLogger('api-gateway');
+} catch (e) {
+  console.log('Using fallback logger - shared module not fully initialized');
+  logger = {
+    info: (msg) => console.log(`[INFO] ${msg}`),
+    error: (msg, err) => console.error(`[ERROR] ${msg}`, err),
+    warn: (msg) => console.warn(`[WARN] ${msg}`),
+  };
+}
+
 const env = getEnv();
 
 // Validate environment variables
