@@ -11,6 +11,7 @@
     "services/search-service"
   ],
   "scripts": {
+    "install:all": "npm install && npm install --workspaces",
     "dev": "docker-compose up",
     "dev:build": "docker-compose up --build",
     "dev:down": "docker-compose down",

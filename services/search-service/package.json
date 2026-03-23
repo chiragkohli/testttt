@@ -17,7 +17,7 @@
     "collectCoverageFrom": ["src/**/*.js", "!src/**/*.test.js", "!src/**/*.spec.js"]
   },
   "dependencies": {
-    "@ecommerce/shared": "workspace:*",
+    "@ecommerce/shared": "file:../../shared",
     "express": "^4.18.2",
     "@elastic/elasticsearch": "^8.10.0",
     "kafkajs": "^2.2.4",
