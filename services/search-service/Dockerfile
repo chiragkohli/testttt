@@ -2,8 +2,7 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Copy root package files
-COPY package.json package-lock.json ./
+COPY package.json package-lock.json* ./
 
 # Copy all service package.json files (required for npm workspaces)
 COPY shared/package.json ./shared/
