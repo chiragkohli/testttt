@@ -2,22 +2,21 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Copy root package files for npm workspaces
-COPY package.json package-lock.json* ./
+# Copy root package files
+COPY package.json package-lock.json ./
 
-# Copy shared package
+# Copy all service package.json files (required for npm workspaces)
 COPY shared/package.json ./shared/
-
-# Copy api-gateway package
+COPY services/user-service/package.json ./services/user-service/
+COPY services/product-service/package.json ./services/product-service/
+COPY services/search-service/package.json ./services/search-service/
 COPY services/api-gateway/package.json ./services/api-gateway/
 
-# Install all dependencies (including workspace dependencies)
+# Install dependencies with workspace resolution
 RUN npm install --legacy-peer-deps
 
-# Copy the rest of shared code
+# Copy source code for all services
 COPY shared ./shared
-
-# Copy the rest of api-gateway code
 COPY services/api-gateway ./services/api-gateway
 
 # Expose port
