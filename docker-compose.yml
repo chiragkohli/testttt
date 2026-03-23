@@ -23,7 +23,7 @@ services:
       - ecommerce-network
 
   mongodb:
-    image: mongo:6-alpine
+    image: mongo:7
     container_name: ecommerce-mongodb
     environment:
       MONGO_INITDB_ROOT_USERNAME: mongodb
